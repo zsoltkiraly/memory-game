@@ -3,18 +3,30 @@ Memory Game - Code by Zsolt Király
 v1.0.3 - 2018-06-27
 */
 
-var forEach = function(array, callback, scope) {
+'use strict';
+var memoryGameLogic = function() {
 
-    var i = 0;
-    len = array.length;
-    if (len > 0) {
-        for (; i < len; i++) {
-            callback.call(scope, i, array[i]);
+    function signatura() {
+        if (window['console']) {
+            const text = {
+                black: '%c     ',
+                blue: '%c   ',
+                author: '%c  Zsolt Király  ',
+                github: '%c  https://zsoltkiraly.com/'
+            }
+    
+            const style = {
+                black: 'background: #282c34',
+                blue: 'background: #61dafb',
+                author: 'background: black; color: white',
+                github: ''
+            }
+    
+            console.log(text.black + text.blue + text.author + text.github, style.black, style.blue, style.author, style.github);
         }
     }
-}
-
-var memoryGameLogic = function() {
+    
+    signatura();
 
     function createRandomPlayground(pG, cParam, dC) {
 
@@ -85,7 +97,7 @@ var memoryGameLogic = function() {
     }
 
     function createImages(c) {
-        forEach(c, function(index, card) {
+        c.forEach((card)=> {
             var dataId = card.getAttribute('data-id');
 
             card.innerHTML = '<div class="hide"></div><img src="images/' + dataId + '.jpg">';
@@ -102,7 +114,7 @@ var memoryGameLogic = function() {
 
     function click(c, cParam) {
 
-        forEach(c, function(index, card) {
+        c.forEach((card)=> {
 
             var hide = card.querySelector('.hide');
 
@@ -118,7 +130,7 @@ var memoryGameLogic = function() {
                     finish.setAttribute('data-click', summa());
                 }
 
-                forEach(c, function(index, card) {
+                c.forEach(()=> {
 
                     obj.parentElement.classList.add('open');
 
@@ -128,7 +140,7 @@ var memoryGameLogic = function() {
 
                         clickDisabled();
 
-                        forEach(open, function(index, openCard) {
+                        open.forEach((openCard)=> {
 
                             if (obj.parentElement != openCard) {
                                 var other = openCard;
@@ -145,7 +157,7 @@ var memoryGameLogic = function() {
                                 } else {
 
                                     var open = document.querySelectorAll('.play-ground .row .cards.open');
-                                    forEach(open, function(index, openCard) {
+                                    open.forEach(()=> {
 
                                         setTimeout(function() {
                                             obj.parentElement.classList.remove('open');
@@ -222,13 +234,13 @@ var memoryGameArea = function() {
     function selectArea() {
         var areas = document.querySelectorAll('ul li');
 
-        forEach(areas, function(index, area) {
+        areas.forEach((area)=> {
 
             area.addEventListener('click', function() {
                 var obj = this;
 
 
-                forEach(areas, function(index, area) {
+                areas.forEach((area)=> {
 
                     if(obj == area) {
                         area.classList.add('select');
